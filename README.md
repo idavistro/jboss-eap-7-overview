@@ -1,20 +1,19 @@
 # JBOSS EAP 7 Overview
 
-# Objetivo
-Te first approach to GitHub
-este es una primera version del archivo readme
+## Objetivo
+Realizar una descripcion de los principales elementos y configuracion con los que cuenta el Servidor de Aplicsciones JBoss EAP.
 
-# Instalacion
+## Instalacion
 This demo was created to review some general features of JBoss Fuse 6.1.1 <br/>
 It was created to help new fuse developers to understand how to create web services using different approaches. This services will execute basic mathematical operations (sum, add, multiply). We will create an additional web service that will standardize request to the other services and act as a proxy too.<br/><br/>
 
-# Configuracion Modo Standalone
+## Configuracion Modo Standalone
 This demo was created to review some general features of JBoss Fuse 6.1.1 <br/>
 
-# Configuracion Modo Domain Mode
+## Configuracion Modo Domain Mode
 This demo was created to review some general features of JBoss Fuse 6.1.1 <br/>
 
-# Datasources
+## Datasources
 This demo was created to review some general features of JBoss Fuse 6.1.1 <br/>
 
 # Web Services Detail
