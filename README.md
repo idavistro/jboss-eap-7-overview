@@ -9,10 +9,6 @@ JBOSS EAP es un servidor de aplicaciones modular JAVA EE open source, basado en 
    * Command Line Interface (CLI) : Como su nombre lo indica, por medio de una interfaz en linea de comando es posible realizar todas las configuraciones escribiendo comandos que posteriormente se ven reflejados en el archivo XML. Además, es posible escribir una serie de comandos y todas sus configuraciones, por ejemplo la creacion de un datasource, en un archivo y enviarlo a la linea de comandos CLI, lo que nos evita errores y permite automatizar todas las operaciones.
    * Web Interface : Por medio de una interface WEB se traduce lo leido en el archivo XML y se muestra en una interfaz gráfica que es mas amigable.
 
-asdasd
-
-asdasd
-
 ## Instalacion
 This demo was created to review some general features of JBoss Fuse 6.1.1 <br/>
 It was created to help new fuse developers to understand how to create web services using different approaches. This services will execute basic mathematical operations (sum, add, multiply). We will create an additional web service that will standardize request to the other services and act as a proxy too.<br/><br/>
