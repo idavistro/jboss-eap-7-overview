@@ -149,9 +149,23 @@ Como se comento anteriormente, todas las configuraciones realizadas en el servid
     ...deployed applications go here
   </deployments>
 </server>
-
 ```
 
+#### Extensions
+Son módulos que extienden las funcionalidades core del servidor. Un módulo es un bundle compuesto por librerias desarrolladas en Java y con archivos de configuración XML. Una extensión define un o ms subsistemas basados en ese módulo. Dentro del tag `<extensions>`, los elementos que se van a utilizar se encuentran en el tag `<extension>` . Por ejemplo para agregar la siguiente extensión *ejb3*, se agregan lo siguiente:
+
+```XML
+<extensions>
+  <!-- list all extensions that you want made available to this server -->
+  <extension module="org.jboss.as.clustering.infinispan"/>
+  <extension module="org.jboss.as.deployment-scanner"/>
+  <extension module="org.jboss.as.ejb3"/>
+  <extension module="org.jboss.as.jpa"/>
+</extensions>
+```
+Cada extensión debe estar declarada en el archivo standalone.xml y cada modulo debe estar almacenado en *JBOSS_HOME/modules/system/layers/base*
+
+#### Management Interfaces
 
 ## Configuracion Modo Domain Mode
 Esta esta configuracion es posible manejar multiples instancias del servidor, publicaciones en multiples hosts desde un solo lugar centralizado. Para lograr la centralizacion se cuenta con un proceso **domain controller (tambien llamado master** que actua actua como un punto de control y se comunica con varios **host controllers (tambien llamados slaves)** en el dominio gestionado. Todos los hosts comparten politicas de administracion y el servidor controlador se asegura que todos estén configurados así.
