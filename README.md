@@ -48,6 +48,7 @@ Las principales carpetas en el directorio de instalación son:
 
 ### Subsistemas y Perfiles
 El una configuracion standalone solo existe una definicion de perfil sencilla y anónima. En cambio en una configuracion domain mode existen 4 perfiles predefinidos que contemplan la mayoria de los casos para las aplicaciones desplegadas en EAP:
+
 ![SubsystemsAndProfles](/images/JBoss_EAP_07.png)
 
 ## Configuracion Modo Standalone
