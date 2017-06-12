@@ -40,6 +40,16 @@ Para detener el servidor se puede realizar algunas de las siguientes acciones:
 
 ![StopEAP](/images/JBoss_EAP_04.png)
 
+Las principales carpetas en el directorio de instalación son:
+* bin: Contiene los scripts utilizados para iniciar el servidor, ejecutar la herramienta de administracion CLI y otras utilidades para desarrolladores
+* domain: Contiene configuraciones y archivos para ejecutar EAP en mod domain
+* standalone: Contiene configuraciones y archivos para ejecutar EAP en modo standalone
+* modules: Contiene la mayoria del codigo que implementa servicios JEE en EAP
+
+### Subsistemas y Perfiles
+El una configuracion standalone solo existe una definicion de perfil sencilla y anónima. En cambio en una configuracion domain mode existen 4 perfiles predefinidos que contemplan la mayoria de los casos para las aplicaciones desplegadas en EAP:
+![SubsystemsAndProfles](/images/JBoss_EAP_07.png)
+
 ## Configuracion Modo Standalone
 En el modo Standalone se representa una sola instance del servidor con un solo archivo de configuracion llamadao *standalone.xml*.
 
