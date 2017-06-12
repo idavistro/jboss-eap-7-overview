@@ -29,11 +29,16 @@ Tanto scripts en Unix Shell, como scripts Batch Windows se encuentran en la inst
 >$ ${JBOSS_HOME}/bin/standalone.sh </br>
 >$ ${JBOSS_HOME}/bin/domain.sh </br>
 
-![Start](/images/JBoss_EAP_02.png)
+![StartEAP](/images/JBoss_EAP_02.png)
+
+![TestEAP](/images/JBoss_EAP_06.png)
+
 Para detener el servidor se puede realizar algunas de las siguientes acciones:
 * Interrumpiendo el proceso con el comando *CTRL+C*
 * Terminando el proceso responsable de la instancia del servidor, con el comando *kill* en sistemas Unix, o desde el Administrador de Tareas en sistemas windows
 * Utilizando la herramienta CLI
+
+![StopEAP](/images/JBoss_EAP_04.png)
 
 ## Configuracion Modo Standalone
 En el modo Standalone se representa una sola instance del servidor con un solo archivo de configuracion llamadao *standalone.xml*.
