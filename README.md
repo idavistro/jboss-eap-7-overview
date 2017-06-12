@@ -531,11 +531,43 @@ Con CLI, se puede realizar ejecutando el siguiente comando:
 
 Para un managed domain, la sintaxis es la siguiente:
 
->/profile=<profile_name>/subsystem=datasources/jdbc-driver=<driver_name>:add\(driver-module-name=<module_name>,driver-name=<unique_driver_name>)
+>/profile=<profile_name>/subsystem=datasources/jdbc-driver=<driver_name>:add\
+(driver-module-name=<module_name>,driver-name=<unique_driver_name>)
 
 El comando específico para el driver MySQL, sería el siguiente:
 
->[domain@172.25.250.254 /] /profile=default/subsystem=datasources/jdbc-driver=mysql:add(\driver-module-name=com.mysql,\driver-name=mysql\)
+>[domain@172.25.250.254 /] /profile=default/subsystem=datasources/jdbc-driver=mysql:add
+(\driver-module-name=com.mysql,\driver-name=mysql\)
 
 #### Configuracion de un DataSource
-Los datasource se configuran en los archivos de configuracion (*domain.xml* y 
+Los datasource se configuran en los archivos de configuracion (*domain.xml* o *standalone.xml*) dentro del sibsistema *datasource*. La estructura es la siguiente:
+
+```XML
+<subsystem xmlns="urn:jboss:domain:datasources:4.0">
+  <datasources>
+    <datasource jndi-name="..." jta="true or false" use-java-context="true or false" pool-name="..." enabled="true or false">
+    <connection-url> connection URL </connection-url>
+    <driver> the driver module </driver>
+    <pool>Connection pool settings</pool>
+    <security>Username and password for connecting to the database</security>
+    <validation>validation settings</validation>
+    <timeout>timeouts</timeout>
+    <statement>SQL statements</statement>
+  </datasource>
+  <drivers>
+    <driver name="..." module="module_name"/>
+  </drivers>
+</datasources>
+</subsystem>
+ ```
+ Para la creación de un data source desde la consola de administración, se realizan los siguientes pasos:
+ 1. Seleccionar el menu *Configuration* y posteriormente *Subsystem* y en la sección de *Datasources* para ingresar al subsistema
+ 1. Clic *Non-XA* y despues *Add* para abrir el wizard de la creación de datasources
+ 1. Seleccionar la base de datos que va a utilizar la aplicación.
+ 1. Ingresar los atributos solicitados y dar clic en siguiente.
+ 1. Clic en el Driver seleccionado para la aplicacion mysql.
+ 1. Ingresar la URL, que se muestra con el formato correcto para la sintaxis MySQL
+ 
+ 
+ 
+
