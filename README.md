@@ -364,9 +364,24 @@ Algunas definiciones imporantes a considerar son:
 
 ### Configuracion del Domain Controler
 La configuración se divide en dos archivs
-1. asd
-1. sd
+* host.xml: Archivo de configuración del host controller.
+* domain.xml: Archivo de configuración para el domain controller, en donde se definen los perfiles disopnibles. 
 
+El archivo host.xml, se muestra como sigue:
+
+```XML
+<?xml version="1.0" ?>
+<host xmlns="urn:jboss:domain:4.1" name="mydomainmaster">
+  ...
+  </management>
+  <domain-controller>
+    <local/>
+  </domain-controller>
+  <interfaces>
+  ...
+</host>
+```
+sdsd
 
 
 
