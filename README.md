@@ -18,11 +18,21 @@ Para realizar la instalación, existen tres maneras:
 >'# rm -rf jboss-eap-7.0
 1. RPM: También se encuntra disponible como un paquete RPM para los usuarios con una suscripción disponible en el sub-canal JBOSS Enterprise Application Platform, en el grupo JBoss Enterprise Application Platform. Este metodo de instalación solo es relevante para el Sistema Operativo RHEL
 >'# yum groupinstall jboss-eap7
+* Para realiza la desinstalación se ejecuta el comando:
+>'# yum groupremove jboss-eap7
 1. Instalador GUI: Es una aplicacion basada en Java que proporciona un entorno de configuracion gráfica que ayuda al usuario paso a paso en las diversas actividades. Asi mismo, puede proporcionar una consola de texto y por lla flexibilidad que tiene, es posible enviar configuraciones especficas en un archivo XML permitiendo que la instalación  en múltiples configuraciones de una manera automatizada.
 >$ java -jar jboss-eap-7.0.0-installer.jar
+* Para realiza la desinstalación se ejecuta el comando:
+>'# yum groupremove jboss-eap7
+
+### Iniciar y Detener el Servidor de Aplicaciones EAP
+Tanto scripts en Unix Shell, como scripts Batch Windows se encuentran en la instalación de EAP. Los archivos para cada una de las configuraciones son *standalone.sh* y *domain.sh* que se pueden encontrar en la carpeta *bin* en donde se realizó la instalación.
+>$ ${JBOSS_HOME}/bin/standalone.sh
+>$ ${JBOSS_HOME}/bin/domain.sh
 
 ## Configuracion Modo Standalone
-En el modo Standalone se representa una sola instance del servidor con un solo archivo de configuracion llamadao *standalone.xml*
+En el modo Standalone se representa una sola instance del servidor con un solo archivo de configuracion llamadao *standalone.xml*.
+
 
 ## Configuracion Modo Domain Mode
 Esta esta configuracion es posible manejar multiples instancias del servidor, publicaciones en multiples hosts desde un solo lugar centralizado. Para lograr la centralizacion se cuenta con un proceso **domain controller (tambien llamado master** que actua actua como un punto de control y se comunica con varios **host controllers (tambien llamados slaves)** en el dominio gestionado. Todos los hosts comparten politicas de administracion y el servidor controlador se asegura que todos estén configurados así.
