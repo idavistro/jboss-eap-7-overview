@@ -348,12 +348,27 @@ Existen 3 maneras de desplegar aplicaciones:
   * .skipdeployed: Es creado por el usuario e indica que la aplicacion no debe ser desplegada.
   * .pending: Indica que la aplicacion tiene que desplegarse pero el servidor no ha recibido la instruccion de hacerlo.
   
-asdas
-
-
 ## Configuracion Modo Domain Mode
 Esta esta configuracion es posible manejar multiples instancias del servidor, publicaciones en multiples hosts desde un solo lugar centralizado. Para lograr la centralizacion se cuenta con un proceso **domain controller (tambien llamado master** que actua actua como un punto de control y se comunica con varios **host controllers (tambien llamados slaves)** en el dominio gestionado. Todos los hosts comparten politicas de administracion y el servidor controlador se asegura que todos estén configurados así.
 Los archivos en donde se hace la configuración y que solo existe en el domain controller, se llama *domain.xml*, y en cada uno de los host controlers se configura el archivo *host.xml*
+
+Algunas definiciones imporantes a considerar son:
+  * Domain: Una conjunto de instancias  del EAP
+  * Domain Controller: Es un solo proceso que actua como manejador central de la administracion. Tambien llamado *master*
+   * Server: Una instancia del EAP ejecutandose sobre un proceso JVM.
+   * Host controler: Un proceso que se encuentra en un host y replica la configuracion de información, status en tiempo de ejecución y la administracion de comandos en una computadora en especfico. Tambien llamado *slave*
+  * Process controller: Un proceso ejecutandose en una máquina que inicia el host controller y las instancias del servidor.
+  * Host: Un conjunto de procesos iniciados por el mismo process controller; un host controller puede tener una o 0 instancias del servidor
+  * Server group: Una conjunto de servidores que son administrados y manejados como uno solo.
+  * Profile: El nombre que se establece para las configuraciones de los subsistemas en el EAP
+
+### Configuracion del Domain Controler
+La configuración se divide en dos archivs
+1. asd
+1. sd
+
+
+
 
 ## Datasources
 This demo was created to review some general features of JBoss Fuse 6.1.1 <br/>
