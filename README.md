@@ -166,6 +166,85 @@ Son módulos que extienden las funcionalidades core del servidor. Un módulo es 
 Cada extensión debe estar declarada en el archivo standalone.xml y cada modulo debe estar almacenado en *JBOSS_HOME/modules/system/layers/base*
 
 #### Management Interfaces
+El manejo de interfaces permite a clientes conectarse de manera remota al EAP. Se exponen dos tipos de interfaces:
+1. HTTP Interface: Proporciona acceso a la consola de administración
+1. Native Interface: Permite la ejecucion de operaciones administrativas a través de un protocolo binario propietario. este tipo de interfaz es utilizado por la herramienta CLI.
+
+Los elementos que integran esta sección son los siguientes:
+
+```XML
+<management>
+  ...
+  <management-interfaces>
+    <native-interface security-realm="ManagementRealm">
+        <socket-binding native="management-native"/>
+    </native-interface>
+    <http-interface security-realm="ManagementRealm">
+      <socket-binding http="management-http"/>
+    </http-interface>
+  </management-interfaces>
+  ...
+</management>
+```
+Los elementos *management-native* y *management-http* de tipo socket-binding se especifican en otras secciones en la sección `<socket-binding-group>`, que es en donde se definen tanto el puerto como el host.
+
+Además es posible establecer los usuarios que pueden accesar remotamente con las siguientes lineas, en donde la sección `<security-realm>` con el tag *ManagementRealm* es utilizado en ambas interfaces y se relacionan con el contenido del archivo *mgmt-user.properties* en donde son almacenadas las credenciales:
+
+```XML
+<management>
+  ...
+  <security-realms>
+    <security-realm name="ManagementRealm">
+      <authentication>
+        <local default-user="$local" skip-group-loading="true"/>
+        <properties path="mgmt-users.properties" relative-to="jboss.server.config.dir"/>
+      </authentication>
+      <authorization map-groups-to-roles="false">
+        <properties path="mgmt-groups.properties" relative-to="jboss.server.config.dir"/>
+      </authorization>
+    </security-realm>
+    <security-realm name="ApplicationRealm">
+      <authentication>
+        <local default-user="$local" allowed-users="*" skip-group-loading="true"/>
+        <properties path="application-users.properties" relative-to="jboss.server.config.dir"/>
+      </authentication>
+      <authorization>
+        <properties path="application-roles.properties" relative-to="jboss.server.config.dir"/>
+      </authorization>
+    </security-realm>
+  </security-realms>
+  ...
+</management>
+```
+### Profiles & Subsystems
+Un perfil es una collección de subsistemas. Un subsistema es en donde se configuran las extensiones de la configuracion standalone del EAP. 
+
+El elemento `<profile>` contiene una colección de elementos hijos `<subsystem>` y dentro de estos elementos existe una única configuración para una extensión en particular. Algunas definiciones de subsistemas no necesitan configuraciones adicionales, por ejemplo *jsf* y *jaxrs*.
+
+```XML
+<profile>
+  <subsystem xmlns="urn:jboss:domain:datasources:4.0">
+    <datasources>
+      <datasource jndi-name="java:jboss/datasources/ExampleDS" pool-name="ExampleDS" enabled="true" use-java-context="true">
+        <connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</connection-url>
+        <driver>h2</driver>
+        <security>
+          <user-name>sa</user-name>
+          <password>sa</password>
+        </security>
+      </datasource>
+      <drivers>
+        <driver name="h2" module="com.h2database.h2">
+          <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
+        </driver>
+      </drivers>
+    </datasources>
+  </subsystem>
+</profile>
+        
+```
+
+
 
 ## Configuracion Modo Domain Mode
 Esta esta configuracion es posible manejar multiples instancias del servidor, publicaciones en multiples hosts desde un solo lugar centralizado. Para lograr la centralizacion se cuenta con un proceso **domain controller (tambien llamado master** que actua actua como un punto de control y se comunica con varios **host controllers (tambien llamados slaves)** en el dominio gestionado. Todos los hosts comparten politicas de administracion y el servidor controlador se asegura que todos estén configurados así.
