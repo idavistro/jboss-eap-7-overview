@@ -120,6 +120,39 @@ En donde las variables representan:
 Para cambiar el puerto en donde se levanta el servidor, y poder múltiples instancias ejecutandose se puede ejecutar el siguiente comando. Su función es sumar el valor *port-offset* a los puertos definidos en el archivo standalone.xml:
 >$ ./standalone.sh -Djboss.socket.binding.port-offset=10000
 
+![StandaloneOffsetPort](/images/JBoss_EAP_08.png)
+
+### Configuracion del archivo standalone.xml
+Como se comento anteriormente, todas las configuraciones realizadas en el servidor son almacenadas en un solo archivo que se encuentra en la carpeta *JBOSS_HOME/standalone/configuration/standalone.xml*. Su estructura general es la siguiente:
+
+```XML
+<server xmlns="urn:jboss:domain:4.1">
+  <extensions>
+    ...list of extensions here
+  </extensions>
+  <system-properties>
+    ...system properties defined here
+  </system-properties>
+  <management>
+    ...management interfaces defined here
+  </management>
+  <profile>
+    ...list of subsystems and their configurations
+  </profile>
+  <interfaces>
+    ...interface definitions
+  </interfaces>
+  <socket-binding-group>
+    ...socket binding definitions
+  </socket-binding-group>
+  <deployments>
+    ...deployed applications go here
+  </deployments>
+</server>
+
+```
+
+
 ## Configuracion Modo Domain Mode
 Esta esta configuracion es posible manejar multiples instancias del servidor, publicaciones en multiples hosts desde un solo lugar centralizado. Para lograr la centralizacion se cuenta con un proceso **domain controller (tambien llamado master** que actua actua como un punto de control y se comunica con varios **host controllers (tambien llamados slaves)** en el dominio gestionado. Todos los hosts comparten politicas de administracion y el servidor controlador se asegura que todos estén configurados así.
 Los archivos en donde se hace la configuración y que solo existe en el domain controller, se llama *domain.xml*, y en cada uno de los host controlers se configura el archivo *host.xml*
