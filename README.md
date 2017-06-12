@@ -324,20 +324,31 @@ Existen 3 maneras de desplegar aplicaciones:
 
 ![StandaloneOffsetPort](/images/JBoss_EAP_11.png)
 
-1.  Despliegue utilizando CLI
+1.  Despliegue utilizando CLI: Es necesario ejecutar el comando *deploy* para realizar el despliegue de la aplicación. El comando tiene los siguientes argumentos:
 
-Es necesario ejecutar el comando *deploy* para realizar el despliegue de la aplicación. El comando tiene los siguientes argumentos:
-
-* file_path
-* --url
-* --name
-* --runtime-name
-* --force
-* --disabled
+  * file_path
+  * --url
+  * --name
+  * --runtime-name
+  * --force
+  * --disabled
 
 > [standalone@localhost:9990 /] deploy /home/jgamboag/Documentos/RedHat/EAP_Practice/version.war --name=version.war
 
 ![StandaloneOffsetPort](/images/JBoss_EAP_13.png)
+
+1. Despligue mediante el File System Deployer: Es un subsistema del EAP que escanea cierto directorio por la existencia de aplicaciones Java EE. Para realizar el despliegue manual es necesario colocar la aplicacion en la carpeta *JBOSS_HOME/deployments*, por medio de marcadores es posible realizar las siguientes acciones:
+  
+  * .dodeploy: Es creado por el usuario y lanza una orden para comenzar con el despliegue
+  * .deployed: Indica que la aplicacion ha sido desplegada
+  * .isdeploying: Indica que la aplicación esta siendo desplegada
+  * .failed: Indica que falló la publicación
+  * .isundeploying: Indica que la aplicación se esta eliminando
+  * .undeployed: Indica que la aplicacion se elimino.
+  * .skipdeployed: Es creado por el usuario e indica que la aplicacion no debe ser desplegada.
+  * .pending: Indica que la aplicacion tiene que desplegarse pero el servidor no ha recibido la instruccion de hacerlo.
+  
+asdas
 
 
 ## Configuracion Modo Domain Mode
