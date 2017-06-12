@@ -93,7 +93,32 @@ jbossadm=9e9950eb85c96ecc517598b3b7bd897f
 ```
 
 ## Configuracion Modo Standalone
-En el modo Standalone se representa una sola instance del servidor con un solo archivo de configuracion llamadao *standalone.xml*.
+En el modo Standalone se representa una sola instance del servidor con un solo archivo de configuracion llamadao *standalone.xml*. En esta modo, únicamente se cuenta con un *profile* definido por default y es en donde se definen los *subsystems* y sus respectivas configuraciones.
+
+Después de la instalacion de EAP, el folder *standalone* contiene las siguientes carpetas:
+* configuration/: Contiene los archivos de configuracion, ademas de una subcarpeta llamada *standalone_xml_history* en donde se encuentra un histórico de los archivos de configuracion. Además, se encuentra el archivo de propiedades *logging.properties* para la configuracion de logs, para usuarios el archivo *mgmt-user.properties*, y para la definición el archivo *mgmt-groups.properties*.
+* deployments/: Contiene los archivos de las aplicaciones Java EE desplegadas, tales como EAR, WAR y JAR.
+* lib/: Se utiliza para desplegar archivos JAR comunes, aunque lo mas recomendado es que las librerias Java (JAR), se instalen como módulos, por lo que esta carpeta comunmente se encuentra vacía.
+
+Después de que se inicia el servidor por primera vez, las siguentes carpetas son creadas:
+
+* data/: Contiene la información utilizada por los subsistemas, tales como mensajes encolados o database in-memory
+* log/: Carpeta por default para almacenar los archivos de log, incluyendo *gc.log.0.current* y *server.log*
+* tmp/: Archivos temporales, tales como mecanimos shared-key utilizados por CLI, para autenticar un usuario local en el servidor.
+
+### Ejecución EAP desde una Ubicación Custom
+La configuracion y los archivos de datos pueden existir en lugares distintos a los de la instalación. Esto permite mantener las configuraciones separadas de la instalación, obteniendo así la posibilidad de realizar upgrades mas fácilmente hacia nuevas versiones de EAP. También brinda la capacidad de ejecutar múltiples instancias del servidor en una misma máquna.
+
+Por ejemplo se puede ejecutar el siguiente comando para inicializar un servidor en otra ruta:
+
+>$ ./standalone.sh -Djboss.server.base.dir=/path/to/base/directory -Djboss.home.dir=/path/to/home/directory
+
+En donde las variables representan:
+* jboss.home.dir: El directorio base en donde se realizó la instalación.
+* jboss.server.base.dir: El directorio en donde se realizo la copia del contenido de la carpeta standalone
+
+Para cambiar el puerto en donde se levanta el servidor, y poder múltiples instancias ejecutandose se puede ejecutar el siguiente comando. Su función es sumar el valor *port-offset* a los puertos definidos en el archivo standalone.xml:
+>$ ./standalone.sh -Djboss.socket.binding.port-offset=10000
 
 ## Configuracion Modo Domain Mode
 Esta esta configuracion es posible manejar multiples instancias del servidor, publicaciones en multiples hosts desde un solo lugar centralizado. Para lograr la centralizacion se cuenta con un proceso **domain controller (tambien llamado master** que actua actua como un punto de control y se comunica con varios **host controllers (tambien llamados slaves)** en el dominio gestionado. Todos los hosts comparten politicas de administracion y el servidor controlador se asegura que todos estén configurados así.
@@ -124,7 +149,7 @@ SOAP Request: <br/>
 ```
 SOAP Response: <br/>
 ```XML
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wss="http://wssuma.ws.demos.fuse.redhat.com/">
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"  xmlns:wss="http://wssuma.ws.demos.fuse.redhat.com/">
    <soapenv:Header/>
    <soapenv:Body>
       <wss:sumResponse>
