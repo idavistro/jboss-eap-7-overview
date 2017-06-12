@@ -463,6 +463,78 @@ Los únicos elementos mandatorios son:  `<management>`, `<domain-controller>` y 
 * `<servers>` : Define las instancias del servidor en el host controller. 
 * `<profile>` : Especifica la configuracion de los subsistemas en los elementos `<extensions>`
 
-## Datasources
-This demo was created to review some general features of JBoss Fuse 6.1.1 <br/>
+A continuación se muestra un ejemplo de un archivo host.xml
 
+```XML
+<host name="myhost" xmlns="urn:jboss:domain:4.1">
+  ...
+  <jvms> 
+    <jvm name="default">
+      <heap size="64m" max-size="128m"/>
+    </jvm>  
+    <jvm name="myhost-jvm">
+      <heap size="1024m" max-size="2048m"/>
+    </jvm>
+  </jvms>
+  <servers>
+    <server name="server1" group="group1">
+      <jvm name="default"/>
+    </server>
+    <server name="server2" group="group2">
+      <jvm name="myhost-jvm"/>
+      <socket-bindings port-offset="200"/>
+    </server>
+  </servers>
+</host>
+```
+
+## Datasources
+Los pasos necesarios para poder realizar la configuracion de un Subsistema Datasoruce, son los siguientes:
+1. Instalar el driver JDBC que se necesita
+1. Definir un datasource dentro del subsistema *datasource* en el archivo de configuracion.
+
+**Database Connection Pool**: Cuando se manejan data-sources es necesario poder controlar el trafico y la concurrencia en las conexiones hacia la base de datos, ya que puede ocasionar un potencial cuello de botella provocando problemas de performance. Para mitigar esta problemática , EAP genera un database connection pool para cada una de las bases de datos conectadas con las aplicaciones, por lo que cuando una aplicacion necesita de una conexión, el EAP la proporciona evitando así la sobretrabajo de abrir y cerrar conexiones para cada petición. El tamaño del pool de conexiones puede ser configurado para cada uno de los data source.
+
+### Configuracion de un Driver JDBC
+Un *JDBC Driver* es un componente que las aplicacines Java utilizan para comunicarse con las bases de datos. Un JDBC driver es empaquetado dentro de un archivo JAR y contiene las clases de la definición del driver. Los JDBC driver están disponibles a través de los fabricantes, por ejemplo MySQL o PostgreSQL, por lo que para utilizarlos lo primero es instalarlo.
+
+Para realizar la instalación con CLI se ejecuta el siguiente comando:
+
+>[disconnected /] module add --name=<module_name> --resources=<JDBC_Driver> --dependencies=<library1>,< library2>,...
+
+Por ejemplo para un driver MySQL se ejecuta el siguiente comando:
+
+>[disconnected /] module add --name=com.mysql \
+--resources=/opt/jboss-eap-7.0/bin/mysql-connector-java.jar \
+--dependencies=javax.api,javax.transaction.api
+
+Por lo que la definición del modulo es:
+
+```XML
+<?xml version="1.0" ?>
+<module xmlns="urn:jboss:module:1.1" name="com.mysql">
+  <resources>
+    <resource-root path="mysql-connector-java.jar"/>
+  </resources>
+  <dependencies>
+    <module name="javax.api"/>
+    <module name="javax.transaction.api"/>
+  </dependencies>
+ </module>
+``
+Despues de instalar el driver como módulo, es necesario crear la definicion del `<driver>` en la sección del subsistema data source del archivo de configuración.
+Con CLI, se puede realizar ejecutando el siguiente comando:
+
+>/subsystem=datasources/jdbc-driver=<driver_name>:add\
+(driver-module-name=<module_name>,driver-name=<unique_driver_name>)
+
+Para un managed domain, la sintaxis es la siguiente:
+
+>/profile=<profile_name>/subsystem=datasources/jdbc-driver=<driver_name>:add\(driver-module-name=<module_name>,driver-name=<unique_driver_name>)
+
+El comando específico para el driver MySQL, sería el siguiente:
+
+>[domain@172.25.250.254 /] /profile=default/subsystem=datasources/jdbc-driver=mysql:add(\driver-module-name=com.mysql,\driver-name=mysql\)
+
+#### Configuracion de un DataSource
+Los datasource se configuran en los archivos de configuracion (*domain.xml* y 
