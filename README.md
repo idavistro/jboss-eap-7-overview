@@ -56,7 +56,11 @@ El instalador de EAP crea usuarios administrativos durante el proceso de instala
 
 ![SubsystemsAndProfles](/images/JBoss_EAP_05.png)
 
-```TXT
+Existen dos tipos distingos de usuario que pueden configurarse:
+* Administrativos: Se utiliza para ingresar a las herramientas administrativas. Las credenciales son almacenadas en el archivo *JBOSS_HOME/standalone/configuration/mgmt-user.properties*, con el password encriptado.
+* Aplicacion: Se utiliza por las aplicaciones Java EE y JAAS o similares para administrar los usuarios. Las credenciales son almacenadas en el archivo *JBOSS_HOME/standalone/configuration/app-user.properties*
+
+```sh
 #
 # Properties declaration of users for the realm 'ManagementRealm' which is the default realm
 # for new installations. Further authentication mechanism can be configured
@@ -87,10 +91,6 @@ jbossadm=9e9950eb85c96ecc517598b3b7bd897f
 #
 
 ```
-
-Existen dos tipos distingos de usuario que pueden configurarse:
-* Administrativos: Se utiliza para ingresar a las herramientas administrativas. Las credenciales son almacenadas en el archivo *JBOSS_HOME/standalone/configuration/mgmt-user.properties*, con el password encriptado.
-* Aplicacion: Se utiliza por las aplicaciones Java EE y JAAS o similares para administrar los usuarios. Las credenciales son almacenadas en el archivo *JBOSS_HOME/standalone/configuration/app-user.properties*
 
 ## Configuracion Modo Standalone
 En el modo Standalone se representa una sola instance del servidor con un solo archivo de configuracion llamadao *standalone.xml*.
