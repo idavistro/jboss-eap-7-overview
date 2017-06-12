@@ -521,7 +521,8 @@ Por lo que la definición del modulo es:
     <module name="javax.transaction.api"/>
   </dependencies>
  </module>
-``
+ ```
+ 
 Despues de instalar el driver como módulo, es necesario crear la definicion del `<driver>` en la sección del subsistema data source del archivo de configuración.
 Con CLI, se puede realizar ejecutando el siguiente comando:
 
