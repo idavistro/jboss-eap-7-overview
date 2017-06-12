@@ -243,7 +243,61 @@ El elemento `<profile>` contiene una colección de elementos hijos `<subsystem>`
 </profile>
         
 ```
+### Interfaces
+Una interface es el nombre lógico para una interfaz de red, direccion IP, o el nombre de un host relacionados a un socket. 
 
+```XML
+<interfaces>
+  <interface name="management">
+    <inet-address value="${jboss.bind.address.management:127.0.0.1}"/>
+  </interface>
+  <interface name="public">
+     <inet-address value="${jboss.bind.address:127.0.0.1}"/>
+  </interface>
+</interfaces>
+        
+```
+Para enviar el valor al momento de iniciar el servidor, se utiliza la propiedad -bmanagement
+
+>$ ./standalone.sh -bmanagement 127.0.0.1
+
+### Socket Binding Group
+Es una colección de socket bindings, los cuales permiten definir los puertos necesarios a utilizar por la instancia del EAP. 
+
+```XML
+<socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}">
+  <socket-binding name="management-http" interface="management" port="${jboss.management.http.port:9990}"/>
+  <socket-binding name="management-https" interface="management" port="${jboss.management.https.port:9993}"/>
+  <socket-binding name="ajp" port="${jboss.ajp.port:8009}"/>
+  <socket-binding name="http" port="${jboss.http.port:8080}"/>
+  <socket-binding name="https" port="${jboss.https.port:8443}"/>
+  <socket-binding name="txn-recovery-environment" port="4712"/>
+  <socket-binding name="txn-status-manager" port="4713"/>
+  <outbound-socket-binding name="mail-smtp">
+    <remote-destination host="localhost" port="25"/>
+  </outbound-socket-binding>
+</socket-binding-group>
+        
+```
+### Deployments
+En esta sección se enlistan las aplicaciones desplegadas en el sevidor EAP standalone.
+
+
+```XML
+<deployments>
+  <deployment name="bookstore.war" runtime-name="bookstore.war">
+    <content sha1="e1e57cb8b89371794d6c7e80baeb8bf0e3da4fcf"/>
+  </deployment>
+  <deployment name="example.war" runtime-name="example.war" enabled="false">
+    <content sha1="0a07b224819ce516b231b1afba0eadc45b272298"/>
+  </deployment>
+  <deployment name="version.war" runtime-name="version">
+    <fs-exploded path="deploying-filesystem/version.war" relative-to="labs"/>
+  </deployment>
+</deployments>
+    
+
+En el ejemplo descrito, existen 3 aplicaciones desplegadas: *bookstore.war, example.war* y *version.war*
 
 
 ## Configuracion Modo Domain Mode
