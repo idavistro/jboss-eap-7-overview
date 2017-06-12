@@ -306,10 +306,38 @@ Los despliegues administrados se almacenan en la carpeta *JBoss_HOME/data/conten
 [jgamboag@localhost labs]$ tree -d $JBOSS_HOME/data/content/
 standalone-instance/data/content/
 ├── 0a
-│    └── 07b224819ce516b231b1afba0eadc45b272298
+│   └── 07b224819ce516b231b1afba0eadc45b272298
 └── e1
     └── e57cb8b89371794d6c7e80baeb8bf0e3da4fcf
 ```
+
+Existen 3 maneras de desplegar aplicaciones:
+1. Desde la Consola de Administracion WEB: clic en la sección superior *Deployments* del menú.
+
+![StandaloneOffsetPort](/images/JBoss_EAP_09.png)
+
+  * Seleccionar el archivo a desplegar.
+  
+![StandaloneOffsetPort](/images/JBoss_EAP_10.png)
+
+  * Definir las opciones de *Name* (identificador del despliegue único por aplidación), *Runtime Name* (define el contexto de la aplicación) y *Enabled* (permite que el despliegue inicie automáticamente cuando inicia la instancia)
+
+![StandaloneOffsetPort](/images/JBoss_EAP_11.png)
+
+1.  Despliegue utilizando CLI
+
+Es necesario ejecutar el comando *deploy* para realizar el despliegue de la aplicación. El comando tiene los siguientes argumentos:
+
+* file_path
+* --url
+* --name
+* --runtime-name
+* --force
+* --disabled
+
+> [standalone@localhost:9990 /] deploy /home/jgamboag/Documentos/RedHat/EAP_Practice/version.war --name=version.war
+
+![StandaloneOffsetPort](/images/JBoss_EAP_13.png)
 
 
 ## Configuracion Modo Domain Mode
@@ -319,38 +347,3 @@ Los archivos en donde se hace la configuración y que solo existe en el domain c
 ## Datasources
 This demo was created to review some general features of JBoss Fuse 6.1.1 <br/>
 
-# Web Services Detail
-
-We will create four web services which are: <br/><br/>
- * Sum Web Service:  It will be created using **Code first** approach. SOAP request will receive two numbers and return a sum operation. 
-The wsdl definition will be available at `http://localhost:{CustomPort}/sum/?wsdl`.<br/>
-This is a SOAP Request and SOAP Response example:<br/>
-SOAP Request: <br/>
-```XML
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wss="http://wssuma.ws.demos.fuse.redhat.com/">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <wss:sum>
-         <arg0>
-            <oper1>5</oper1>
-            <oper2>1</oper2>
-         </arg0>
-      </wss:sum>
-   </soapenv:Body>
-</soapenv:Envelope>
-```
-SOAP Response: <br/>
-```XML
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"  xmlns:wss="http://wssuma.ws.demos.fuse.redhat.com/">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <wss:sumResponse>
-         <return>
-            <result>6</result>
-         </return>
-      </wss:sumResponse>
-   </soapenv:Body>
-</soapenv:Envelope>
-```
-
- * Add Web Service:  It will be created using **Code first** approach. SOAP request will receive two numbers and return an add operation.  The wsdl definition will be available at `http://localhost:{CustomPort}/add/?wsdl`.<br/>
