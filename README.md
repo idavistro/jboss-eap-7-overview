@@ -27,8 +27,13 @@ Para realizar la instalación, existen tres maneras:
 
 ### Iniciar y Detener el Servidor de Aplicaciones EAP
 Tanto scripts en Unix Shell, como scripts Batch Windows se encuentran en la instalación de EAP. Los archivos para cada una de las configuraciones son *standalone.sh* y *domain.sh* que se pueden encontrar en la carpeta *bin* en donde se realizó la instalación.
->$ ${JBOSS_HOME}/bin/standalone.sh
->$ ${JBOSS_HOME}/bin/domain.sh
+>$ ${JBOSS_HOME}/bin/standalone.sh </br>
+>$ ${JBOSS_HOME}/bin/domain.sh </br>
+
+Para detener el servidor se puede realizar algunas de las siguientes acciones:
+* Interrumpiendo el proceso con el comando *CTRL+C*
+* Terminando el proceso responsable de la instancia del servidor, con el comando *kill* en sistemas Unix, o desde el Administrador de Tareas en sistemas windows
+* Utilizando la herramienta CLI
 
 ## Configuracion Modo Standalone
 En el modo Standalone se representa una sola instance del servidor con un solo archivo de configuracion llamadao *standalone.xml*.
