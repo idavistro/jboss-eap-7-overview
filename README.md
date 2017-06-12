@@ -8,7 +8,6 @@ JBOSS EAP es un servidor de aplicaciones JAVA EE 7, modular y open source, basad
    * XML : Es posible modificar directamente el archivo de configuracion, aunque lo mas recomendado es realizar las modificaciones utilizando las otras herramientas, ya que los cambios pueden sobreescribirse si no se han guardado correctamente.
    * Command Line Interface (CLI) : Como su nombre lo indica, por medio de una interfaz en linea de comando es posible realizar todas las configuraciones escribiendo comandos que posteriormente se ven reflejados en el archivo XML. Además, es posible escribir una serie de comandos y todas sus configuraciones, por ejemplo la creacion de un datasource, en un archivo y enviarlo a la linea de comandos CLI, lo que nos evita errores y permite automatizar todas las operaciones. 
    * Web  Interface : Por medio de una interface WEB se traduce lo leido en el archivo XML y se muestra en una interfaz gráfica que es mas amigable.
-asdasdds
 
 ## Instalacion
 Para realizar la instalación, existen tres maneras:
@@ -30,6 +29,7 @@ Tanto scripts en Unix Shell, como scripts Batch Windows se encuentran en la inst
 >$ ${JBOSS_HOME}/bin/standalone.sh </br>
 >$ ${JBOSS_HOME}/bin/domain.sh </br>
 
+![Start](/images/JBoss_EAP_02.png)
 Para detener el servidor se puede realizar algunas de las siguientes acciones:
 * Interrumpiendo el proceso con el comando *CTRL+C*
 * Terminando el proceso responsable de la instancia del servidor, con el comando *kill* en sistemas Unix, o desde el Administrador de Tareas en sistemas windows
@@ -37,7 +37,6 @@ Para detener el servidor se puede realizar algunas de las siguientes acciones:
 
 ## Configuracion Modo Standalone
 En el modo Standalone se representa una sola instance del servidor con un solo archivo de configuracion llamadao *standalone.xml*.
-
 
 ## Configuracion Modo Domain Mode
 Esta esta configuracion es posible manejar multiples instancias del servidor, publicaciones en multiples hosts desde un solo lugar centralizado. Para lograr la centralizacion se cuenta con un proceso **domain controller (tambien llamado master** que actua actua como un punto de control y se comunica con varios **host controllers (tambien llamados slaves)** en el dominio gestionado. Todos los hosts comparten politicas de administracion y el servidor controlador se asegura que todos estén configurados así.
