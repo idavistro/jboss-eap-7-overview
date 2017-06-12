@@ -568,6 +568,77 @@ Los datasource se configuran en los archivos de configuracion (*domain.xml* o *s
  1. Clic en el Driver seleccionado para la aplicacion mysql.
  1. Ingresar la URL, que se muestra con el formato correcto para la sintaxis MySQL
  
- 
- 
+## Configuracion de la Java Virtual Machine
+La versión de EAP 7 trabaja con un JDK 1.8 compatible, versiones anteriores de JVM tales como JDK 1.7 no estan soportados.
+JVM utiliza sofisticados mecanismos de gestion de memoria que pueden automaticamente liberar espacio que no se utiliza en el heap utilizando un proceso llamado *garbage collection*.
+La memoria de una JVM puede ser categorizado en dos ares:
+1. Heap: Dinamicamente crece o decrece los bloques de memoria en donde se almacenan las estructuras de datos Java que residen en las aplicaciones.
+1. Non-Heap: Se compone del stack, los metadatos de clases y métodos, código en caché y el metaspace
+
+Existen muchas configuraciones disponibles para mejorar el performance de una JVM. Algunos de los mas importantes son:
+
+* Xms: Determina el tamaño mínimo de espacio en el heap. Debe ser menor o igual al tamaño máximo del heap
+* Xmx: Determina el tamaño máximo de espacio en el heap. En caso de que la aplicación aloje mas memoria que la configurada, el proceso JVM tiene que hacer swapping lo que eventualmente causa un out-of-memory (OOM) error.
+* -XX:MaxMetaspaceSize: se utiliza para determinar el tamaño máximo del Metaspace
+* -XX:NewRatio: se utiliza para establecer el radio entre la generacion de nuevos espacios hacia viejos.
+* -XX:NewSize: se utiliza para deteminar el tamaño del espacio en la generacion de Eden.
+
+### Configuración de JVM para un servidor Standalone
+La configuración de la JVM se encuentra en el archivo *standalone.conf* en la carpeta *JBOSS_HOME/bin*. La configuracion de la variable *JAVA_OPTS* se envían a los procesos del sistema JVM que se ejecután en el servidor standalone
+
+```SH
+# Specify options to pass to the Java VM.
+#
+if [ "x$JAVA_OPTS" = "x" ]; then
+JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m ..."
+ ```
+Los cambios de configuración de los parámetros de la JVM requieren un reinicio del servidor.
+
+### Configuración de JVM para un servidor en Managed Domain
+En una configuracion de EAP managed domain, el host controller es responsable de inicializar los procesos JVM en cada uno de los servidores que se encuentran en el dominio. Las configuraciones para cada servidor pueden hacerse en 3 niveles:
+
+* host controller level: La sección `<jvm>` en el archivo *host.xml*
+* server group level: La sección `<server-group>` en el archivo *domain.xml*
+* server level: La sección `<server>` en el archivo *host.xml*
+
+Se siguen las siguientes reglas para la actualizacion de la configuración en el archivo *domain.conf*
+
+* Las configuraciones de JVM en group level del archivo *domain.xml* sobreescribe cualquier configuración que exista en la sección `<jvm>` del archivo *host.xml*
+* Las configuraciones de JVM en el archivo *host.xml* sobreescriben cualquier configuracion de la sección `<jvm>`.
+
+Las configuraciones de JVM a nivel host controller en el archivo *host.xml* se puede configurar de la siguiente manera:
+
+```XML
+<jvms>
+  <jvm name="small_jvm">
+    <heap size="64m" max-size="128m"/>
+  </jvm>
+  <jvm name="production_jvm">
+    <heap size="2048m" max-size="2048m"/>
+    <jvm-options>
+      <option value="-server"/>
+    </jvm-options>
+   </jvm>
+</jvms>
+ ```
+ Desde un comando CLI se ejecutaria de la siguiente manera
+ > /host=servera/jvm=small_jvm:add(heap-size=64m,max-heap-size=128m)
+ > /host=servera/jvm=production_jvm:add(
+heap-size=2048m,
+max-heap-size=2048m,
+jvm-options=["-server"]
+)
+
+La configuración de la JVM puede hacerse a nivel servidor en la sección <server>` del archivo *host.xml* . Un nuevo elemento `<jvm>`, un ejemplo de definición es el siguiente:
+
+```XML
+<server name="test_server" group="groupB" auto-start="true">
+  <socket-binding-group ref="standard-sockets" port-offset="300"/>
+  <jvm name="production_jvm">
+    <heap size="256m"/>
+  </jvm>
+</server>
+```
+.
+
 
