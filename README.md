@@ -13,8 +13,9 @@ asdasdds
 ## Instalacion
 Para realizar la instalación, existen tres maneras:
 1. Zip File: El EAP se distribuye como un archivo comprimido que unicamente tiene que ser extraido en la carpeta desde donde se va a ejecutar. El archivo contiene librerias, archivos de configuracion y scripts que permiten iniciar el servidor de aplicaciones.
-1. RPM: También se encuntra disponible como un paquete RPM para los usuarios con una suscripción disponible en el sub-canal JBOSS Enterprise Application Platform, en el grupo JBoss Enterprise Application Platform. Este metodo de instalación solo es relevante para el SO RHEL
-1. Descomprimir el archivo.zip : 
+
+1. RPM: También se encuntra disponible como un paquete RPM para los usuarios con una suscripción disponible en el sub-canal JBOSS Enterprise Application Platform, en el grupo JBoss Enterprise Application Platform. Este metodo de instalación solo es relevante para el Sistema Operativo RHEL
+1. Instalador GUI: Es una aplicacion basada en Java que proporciona un entorno de configuracion gráfica que ayuda al usuario paso a paso en las diversas actividades. Asi mismo, puede proporcionar una consola de texto y por lla flexibilidad que tiene, es posible enviar configuraciones especficas en un archivo XML permitiendo que la instalación  en múltiples configuraciones de una manera automatizada.
 
 ## Configuracion Modo Standalone
 En el modo Standalone se representa una sola instance del servidor con un solo archivo de configuracion llamadao *standalone.xml*
