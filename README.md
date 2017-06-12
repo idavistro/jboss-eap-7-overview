@@ -282,10 +282,9 @@ Es una colección de socket bindings, los cuales permiten definir los puertos ne
 ### Deployments
 En esta sección se enlistan las aplicaciones desplegadas en el sevidor EAP standalone.
 
-
 ```XML
 <deployments>
-  <deployment name="bookstore.war" runtime-name="bookstore.war">
+  <deployment name="helloworld.war" runtime-name="bookstore.war">
     <content sha1="e1e57cb8b89371794d6c7e80baeb8bf0e3da4fcf"/>
   </deployment>
   <deployment name="example.war" runtime-name="example.war" enabled="false">
@@ -295,9 +294,22 @@ En esta sección se enlistan las aplicaciones desplegadas en el sevidor EAP stan
     <fs-exploded path="deploying-filesystem/version.war" relative-to="labs"/>
   </deployment>
 </deployments>
-    
+```
 
-En el ejemplo descrito, existen 3 aplicaciones desplegadas: *bookstore.war, example.war* y *version.war*
+En el ejemplo descrito, existen 3 aplicaciones desplegadas: *helloworld.war, example.war* y *version.war*, en donde las primeras dos aplicaciones son administradas por el EAP y la tercera fue desplegada con un metodo no conocido.
+
+El elemento `<content>` represena el valor de un algoritmo de hash seguro (SHA), el cual es utilizado internamente como un identificador único del despliegue.
+
+Los despliegues administrados se almacenan en la carpeta *JBoss_HOME/data/content*, en donde se crea un subfolder que comiensa con los dos primeros caracteres del codigo SHA1
+
+```TXT
+[jgamboag@localhost labs]$ tree -d $JBOSS_HOME/data/content/
+standalone-instance/data/content/
+├── 0a
+│    └── 07b224819ce516b231b1afba0eadc45b272298
+└── e1
+    └── e57cb8b89371794d6c7e80baeb8bf0e3da4fcf
+```
 
 
 ## Configuracion Modo Domain Mode
