@@ -51,6 +51,47 @@ El una configuracion standalone solo existe una definicion de perfil sencilla y 
 
 ![SubsystemsAndProfles](/images/JBoss_EAP_07.png)
 
+### Creacion de Usuarios
+El instalador de EAP crea usuarios administrativos durante el proceso de instalacion, pero si es necesario crear usuarios adicionales o si se utilizo otra forma de instalacion (por ejemplo descomprimiendo el zip) es necesario ejecutar el script *add-user.sh* que se encuentra ubicado en la carpeta *JBOSS_HOME/BIN*.
+
+![SubsystemsAndProfles](/images/JBoss_EAP_05.png)
+
+```TXT
+#
+# Properties declaration of users for the realm 'ManagementRealm' which is the default realm
+# for new installations. Further authentication mechanism can be configured
+# as part of the <management /> in standalone.xml.
+#
+# Users can be added to this properties file at any time, updates after the server has started
+# will be automatically detected.
+#
+# By default the properties realm expects the entries to be in the format: -
+# username=HEX( MD5( username ':' realm ':' password))
+#
+# A utility script is provided which can be executed from the bin folder to add the users: -
+# - Linux
+#  bin/add-user.sh
+#
+# - Windows
+#  bin\add-user.bat
+# On start-up the server will also automatically add a user $local - this user is specifically
+# for local tools running against this AS installation.
+#
+# The following illustrates how an admin user could be defined, this
+# is for illustration only and does not correspond to a usable password.
+#
+#admin=2a0923285184943425d1f53ddd58ec7a
+jbossadm=9e9950eb85c96ecc517598b3b7bd897f
+#
+#$REALM_NAME=ManagementRealm$ This line is used by the add-user utility to identify the realm name already used in this file.
+#
+
+```
+
+Existen dos tipos distingos de usuario que pueden configurarse:
+* Administrativos: Se utiliza para ingresar a las herramientas administrativas. Las credenciales son almacenadas en el archivo *JBOSS_HOME/standalone/configuration/mgmt-user.properties*, con el password encriptado.
+* Aplicacion: Se utiliza por las aplicaciones Java EE y JAAS o similares para administrar los usuarios. Las credenciales son almacenadas en el archivo *JBOSS_HOME/standalone/configuration/app-user.properties*
+
 ## Configuracion Modo Standalone
 En el modo Standalone se representa una sola instance del servidor con un solo archivo de configuracion llamadao *standalone.xml*.
 
