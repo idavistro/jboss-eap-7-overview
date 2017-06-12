@@ -381,9 +381,87 @@ El archivo host.xml, se muestra como sigue:
   ...
 </host>
 ```
-sdsd
 
+El elemento `<domain-controller> ` infroma al host controller en donde puede encontrar al domain controller. En caso de que host controller sea el *master* se utiliza el elemento `<local/> ` . 
 
+Para configurar un host controller como *slave*, es necesario especificarlo en el archivo host.xml
+
+```XML
+<?xml version="1.0" ?>
+<host xmlns="urn:jboss:domain:4.1" name="mydomainmaster">
+  ...
+  <domain-controller>
+    <remote security-realm="ManagementRealm">
+      <discovery-options>
+        <stati c-discovery name="primary" protocol="${jboss.domain.master.protocol:remote}" host="${jboss.domain.master.address}" port="${jboss.domain.master.port:9999}"/>
+        </discovery-options>
+    </remote>
+  </domain-controller>
+  ...
+```
+
+El elemento `<remote> ` informa al host controller que es un slave y que los elementos hijos especifican en donde encontrar al master.
+
+Para iniciar el servidor unicamente es necesario ejecutar el comando, en el directorio */bin* de la carpeta de la instalación.:
+
+> $ ./domain.sh
+
+Para realizar una copia y poder realizar modificaciones en otra carpeta se ejecuta el comando:
+
+> ./domain.sh -Djboss.domain.base.dir=/home/jgamboag/Documentos/RedHat/EAP_Practice/DomainMode/domain --domain-config=mydomain.xml --host-config=myhost.xml
+
+A diferencia del modo standalone, en la consola de administración se pueden observar en el menu superior el tab *Runtime*, con operaciones adicionales tales como configuracion de hosts, server groups y server instances.
+
+![StandaloneOffsetPort](/images/JBoss_EAP_14.png)
+
+### Configuracion del Host Controller
+La estructura general del archivo host.xml se define por el XML Schema *JBOSS_HOME/docs/schema/wildfly-config_4_1.xsd*
+
+```XML
+<host name="my_hostname" xmlns="urn:jboss:domain:4.1">
+  <extensions>
+    ... host controller extensions
+  </extensions>
+  <system-properties>
+    ... for defining system properties
+  </system-properties>
+  <paths>
+    ... for defining filesystem paths
+  </paths>
+  <vault>
+    ... for storing encrypted passwords
+  </vault>
+  <management>
+    ... the management interfaces and their security settings appear here
+  </management>
+  <domain-controller>
+    ... the settings for how to connect to the Domain Controller
+  </domain-controller>
+  <interfaces>
+    ... interfaces are defined here
+  </interfaces>
+  <jvms>
+    ... JVMs are defined here
+  </jvms>
+  <servers>
+    ... servers are defined here
+  </servers>
+  <profile>
+    ... subsystems configurations for host controller extensions
+  </profile>
+</host>
+```
+Los únicos elementos mandatorios son:  `<management>`, `<domain-controller>` y `<host>`, y la descripción de los elementos es la siguiente:
+* `<extension>` : Declara las extensiones que necesitan ser cargadas por el host controler
+* `<system-properties>` : Define las propiedades del sistema especificas del host 
+* `<paths>` : Define el path del filesystem utilizado para la configuracion de los subsistemas.
+* `<vault>` : Define un security vault, es decir el lugar en donde son almacenados los passwords encriptados
+* `<management>` : Define las interfaces de administracion disponibles, así como las configuraciones de seguridad y auditoria  
+* `<interfaces>` : Define las direcciones IP de los servicis y los subsistemas
+* `<domain-controller>` : Especifica en donde se encuentra el host controller y el domain controller, o si el mismo es el domain-controller
+* `<jvms>` : Define multiples configuraciones de una Java Virtual Machine que pueden ser referenciadas por diferentes grupos de servidores y ser identificados individualmente por instancias del servidor
+* `<servers>` : Define las instancias del servidor en el host controller. 
+* `<profile>` : Especifica la configuracion de los subsistemas en los elementos `<extensions>`
 
 ## Datasources
 This demo was created to review some general features of JBoss Fuse 6.1.1 <br/>
