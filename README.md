@@ -5,7 +5,7 @@ Realizar una descripcion de los principales elementos y configuracion con los qu
 JBOSS EAP es un servidor de aplicaciones JAVA EE 7, modular y open source, basado en el proyecto comunitario Wildfly, algunas de sus principales caracteristicas son:
  * Configuracion Simplificada: Todas las configuraciones se encuentra en un archivo XML; para el modo Standalone se utiliza el archivo Standalone.xml y para el modo Domain se utilizan dos archivos domain.xml y host.xml. La unica diferencia entre estas dos configuraciones es la centralizacion en la administración de todas las caracteristicas con las que se configura el servidor de aplicaciones; algunas como seguridad, transaccionalidad, intercambio de mensjaes, clusterizacion, alta disponibilidad, y otras tecnologicas Java EE, están disponibles tanto en standalone como en domain mode.
  * Herramientas de Gestion: Es posible realizar las configuraciones utilizando cualquiera de las siguientes harremientas:
-   * XML : Es posible modificar directamente el archivo de configuracion, aunque lo mas recomendado es realizar las modificaciones utilizando las otras herramientas, ya que los cambios pueden sobreescribirse si no se han guardado correctamente.
+   * XML : Es posible modificar directamente el archivo de configuracion, aunque lo mas recomendado es realizar las modificaciones utilizando las otras herramientas, ya que si se modifica el archivo de configuracion y el servidor esta corriendo, las otras dos herramientas de gestion pueden sobreescribir los cambios.
    * Command Line Interface (CLI) : Como su nombre lo indica, por medio de una interfaz en linea de comando es posible realizar todas las configuraciones escribiendo comandos que posteriormente se ven reflejados en el archivo XML. Además, es posible escribir una serie de comandos y todas sus configuraciones, por ejemplo la creacion de un datasource, en un archivo y enviarlo a la linea de comandos CLI, lo que nos evita errores y permite automatizar todas las operaciones. 
    * Web  Interface : Por medio de una interface WEB se traduce lo leido en el archivo XML y se muestra en una interfaz gráfica que es mas amigable.
 
@@ -15,14 +15,12 @@ Para realizar la instalación, existen tres maneras:
 >$ unzip jboss-eap-7.0.0.zip
 * Para realiza la desinstalación se ejecuta el comando:
 >'# rm -rf jboss-eap-7.0
-1. RPM: También se encuntra disponible como un paquete RPM para los usuarios con una suscripción disponible en el sub-canal JBOSS Enterprise Application Platform, en el grupo JBoss Enterprise Application Platform. Este metodo de instalación solo es relevante para el Sistema Operativo RHEL
+2. RPM: También se encuntra disponible como un paquete RPM para los usuarios con una suscripción disponible en el sub-canal JBOSS Enterprise Application Platform. Este metodo de instalación solo es relevante para el Sistema Operativo RHEL
 >'# yum groupinstall jboss-eap7
 * Para realiza la desinstalación se ejecuta el comando:
 >'# yum groupremove jboss-eap7
-1. Instalador GUI: Es una aplicacion basada en Java que proporciona un entorno de configuracion gráfica que ayuda al usuario paso a paso en las diversas actividades. Asi mismo, puede proporcionar una consola de texto y por lla flexibilidad que tiene, es posible enviar configuraciones especficas en un archivo XML permitiendo que la instalación  en múltiples configuraciones de una manera automatizada.
+3. Instalador GUI: Es una aplicacion basada en Java que proporciona un entorno de configuracion gráfica que ayuda al usuario paso a paso en las diversas actividades. Asi mismo, puede proporcionar una consola de texto y por la flexibilidad que tiene, es posible enviar configuraciones especificas en un archivo XML permitiendo que la instalación  en múltiples configuraciones de una manera automatizada.
 >$ java -jar jboss-eap-7.0.0-installer.jar
-* Para realiza la desinstalación se ejecuta el comando:
->'# yum groupremove jboss-eap7
 
 ### Iniciar y Detener el Servidor de Aplicaciones EAP
 Tanto scripts en Unix Shell, como scripts Batch Windows se encuentran en la instalación de EAP. Los archivos para cada una de las configuraciones son *standalone.sh* y *domain.sh* que se pueden encontrar en la carpeta *bin* en donde se realizó la instalación.
@@ -47,7 +45,7 @@ Las principales carpetas en el directorio de instalación son:
 * modules: Contiene la mayoria del codigo que implementa servicios JEE en EAP
 
 ### Subsistemas y Perfiles
-El una configuracion standalone solo existe una definicion de perfil sencilla y anónima. En cambio en una configuracion domain mode existen 4 perfiles predefinidos que contemplan la mayoria de los casos para las aplicaciones desplegadas en EAP:
+En una configuracion standalone solo existe una definicion de perfil sencilla y anónima. En cambio en una configuracion domain mode existen 4 perfiles predefinidos que contemplan la mayoria de los casos para las aplicaciones desplegadas en EAP:
 
 ![SubsystemsAndProfles](/images/JBoss_EAP_07.png)
 
@@ -152,7 +150,7 @@ Como se comento anteriormente, todas las configuraciones realizadas en el servid
 ```
 
 #### Extensions
-Son módulos que extienden las funcionalidades core del servidor. Un módulo es un bundle compuesto por librerias desarrolladas en Java y con archivos de configuración XML. Una extensión define un o ms subsistemas basados en ese módulo. Dentro del tag `<extensions>`, los elementos que se van a utilizar se encuentran en el tag `<extension>` . Por ejemplo para agregar la siguiente extensión *ejb3*, se agregan lo siguiente:
+Son módulos que extienden las funcionalidades core del servidor. Un módulo es un bundle compuesto por librerias desarrolladas en Java y con archivos de configuración XML. Una extensión define uno o más subsistemas basados en ese módulo. Dentro del tag `<extensions>`, los elementos que se van a utilizar se encuentran en el tag `<extension>` . Por ejemplo para agregar la siguiente extensión *ejb3*, se agregan lo siguiente:
 
 ```XML
 <extensions>
@@ -284,7 +282,7 @@ En esta sección se enlistan las aplicaciones desplegadas en el sevidor EAP stan
 
 ```XML
 <deployments>
-  <deployment name="helloworld.war" runtime-name="bookstore.war">
+  <deployment name="helloworld.war" runtime-name="helloworld.war">
     <content sha1="e1e57cb8b89371794d6c7e80baeb8bf0e3da4fcf"/>
   </deployment>
   <deployment name="example.war" runtime-name="example.war" enabled="false">
@@ -363,9 +361,9 @@ Algunas definiciones imporantes a considerar son:
   * Profile: El nombre que se establece para las configuraciones de los subsistemas en el EAP
 
 ### Configuracion del Domain Controler
-La configuración se divide en dos archivs
+La configuración se divide en dos archivos
 * host.xml: Archivo de configuración del host controller.
-* domain.xml: Archivo de configuración para el domain controller, en donde se definen los perfiles disopnibles. 
+* domain.xml: Archivo de configuración para el domain controller, en donde se definen los perfiles disponibles. 
 
 El archivo host.xml, se muestra como sigue:
 
