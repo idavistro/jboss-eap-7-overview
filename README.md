@@ -569,7 +569,7 @@ Los datasource se configuran en los archivos de configuracion (*domain.xml* o *s
 ## Configuracion de la Java Virtual Machine
 La versión de EAP 7 trabaja con un JDK 1.8 compatible, versiones anteriores de JVM tales como JDK 1.7 no estan soportados.
 JVM utiliza sofisticados mecanismos de gestion de memoria que pueden automaticamente liberar espacio que no se utiliza en el heap utilizando un proceso llamado *garbage collection*.
-La memoria de una JVM puede ser categorizado en dos ares:
+La memoria de una JVM puede ser categorizado en dos áreas:
 1. Heap: Dinamicamente crece o decrece los bloques de memoria en donde se almacenan las estructuras de datos Java que residen en las aplicaciones.
 1. Non-Heap: Se compone del stack, los metadatos de clases y métodos, código en caché y el metaspace
 
@@ -627,7 +627,7 @@ max-heap-size=2048m,
 jvm-options=["-server"]
 )
 
-La configuración de la JVM puede hacerse a nivel servidor en la sección <server>` del archivo *host.xml* . Un nuevo elemento `<jvm>`, un ejemplo de definición es el siguiente:
+La configuración de la JVM puede hacerse a nivel servidor en la sección `<server>` del archivo *host.xml* . Un nuevo elemento `<jvm>`, un ejemplo de definición es el siguiente:
 
 ```XML
 <server name="test_server" group="groupB" auto-start="true">
